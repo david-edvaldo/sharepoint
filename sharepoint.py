@@ -7,28 +7,28 @@ from office365.sharepoint.client_context import ClientContext
 from office365.sharepoint.files.file import File
 
 
-class Config():
+class Config:
     
     def set_parameters(self, params) -> dict:
         '''
         Check conditions parameters for the process
-        Attributes
-        ----------
-            url : dtype str
-                Area sharepoint url.
-                --> example = 'https://sharepoint.com/sites/dataanalytics'
+            Attributes
+            ----------
+                url : dtype str
+                    Area sharepoint url.
+                    --> example = 'https://sharepoint.com/sites/dataanalytics'
 
-            client_id : dtype str
-                Website access email or website security credentials
-                -> url to help = 'https://learn.microsoft.com/pt-br/sharepoint/dev/solution-guidance/security-apponly-azureacs'
-                
-            client_secret : dtype str
-                Website access network password or website security credentials
-                -> url to help = 'https://learn.microsoft.com/pt-br/sharepoint/dev/solution-guidance/security-apponly-azureacs'
-               
-        Returns
-        ----------
-            Dictionary with parameters
+                client_id : dtype str
+                    Website access email or website security credentials
+                    -> url to help = 'https://learn.microsoft.com/pt-br/sharepoint/dev/solution-guidance/security-apponly-azureacs'
+
+                client_secret : dtype str
+                    Website access network password or website security credentials
+                    -> url to help = 'https://learn.microsoft.com/pt-br/sharepoint/dev/solution-guidance/security-apponly-azureacs'
+
+            Returns
+            ----------
+                Dictionary with parameters
         '''
         
         self.params = {
@@ -73,17 +73,15 @@ class SharePoint(Config):
         
     def auth(self):
         '''
-            Website access authentication
-            
-        Attributes
-        ----------
-            
-        Returns
-        ----------
-           Authentication for Client
+        Website access authentication
+            Attributes
+            ----------
+            Returns
+            ----------
+               Authentication for Client
         '''
         
-        e_mail = True if len([tx for tx in ['@', '.com','.com.'] if tx in self.CLIENT_ID]) > 1 else False
+        e_mail = True if len([tx for tx in ['@', '.com','.com.'] if tx in self.CLIENT_ID]) >= 1 else False
         ctx_auth = AuthenticationContext(self.SHAREPOINT_URL)
                 
         if e_mail:
@@ -162,18 +160,17 @@ class SharePoint(Config):
     
     def get_list(self, ls_name:str) -> pd.DataFrame:
         '''
-            Selection method for get List of the sharepoint
-            
-        Attributes
-        ----------
-            ls_name : dtype str
-                List name registered in sharepoint
-                --> example: https://sharepoint.com/sites/dataanalytics/Lists/tb_analytics
-                ---> ls_name: "tb_analytics"
-        
-        Returns
-        ----------
-            DataFrame with sharepoint list
+        Selection method for get List of the sharepoint    
+            Attributes
+            ----------
+                ls_name : dtype str
+                    List name registered in sharepoint
+                    --> example: https://sharepoint.com/sites/dataanalytics/Lists/tb_analytics
+                    ---> ls_name: "tb_analytics"
+
+            Returns
+            ----------
+                DataFrame with sharepoint list
         '''
         
         self.auth_site = self.auth()
